@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "491641133310",
+    "project_id": "to--do-64620",
+    "storage_bucket": "to--do-64620.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491641133310:android:8a57b326187228b68a6daf",
+        "android_client_info": {
+          "package_name": "com.shristy.todo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491641133310-d1lpe238muhtrng77rdldn68bhigj7em.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0MsKFyKlkmYj1CKrzSeka7z667SUZkEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "491641133310-d1lpe238muhtrng77rdldn68bhigj7em.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
