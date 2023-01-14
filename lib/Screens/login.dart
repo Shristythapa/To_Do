@@ -5,24 +5,6 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:time_me/Screens/sign.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
-
-  @override
-  State<Login> createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter ',
-      home: LogIn(),
-    );
-  }
-}
-
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
 
@@ -229,12 +211,12 @@ class _LogInState extends State<LogIn> {
                               ),
                             ),
                             onTap: () {
-                              // Navigator.of(context).pop();
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => const Sign()),
-                              // );
+                              Navigator.of(context).pop();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>  mySign()),
+                              );
                             },
                           )),
                         )

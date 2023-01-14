@@ -1,45 +1,28 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'dart:ui';
-import 'package:flutter/src/material/material_state.dart';
-import 'package:flutter/src/material/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:time_me/Auth/google_sign_in_dart.dart';
+import 'package:time_me/models/user_model.dart';
+import 'package:time_me/services/google_sign_in_dart.dart';
 import 'package:time_me/Screens/login.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:time_me/crude/profilePicture.dart';
-import 'package:time_me/crude/userCrude.dart';
 
-class Sign extends StatelessWidget {
-  const Sign({super.key});
+import '../viewModel/auth_view_model.dart';
+import '../viewModel/global_ui_model_view.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: mySign(title: 'sign up'),
-    );
-  }
-}
+
 
 //validation functions
 
 //email
 
 class mySign extends StatefulWidget {
-  const mySign({super.key, required this.title});
+//  const mySign({super.key, required this.title});
 
-  final String title;
+//  final String title;
 
   @override
   State<mySign> createState() => _mySignUpState();
@@ -64,45 +47,74 @@ class _mySignUpState extends State<mySign> {
     throw UnimplementedError();
   }
 
-  void databaseReg() {
-    late DatabaseReference userRef;
+  // void databaseReg() {
+  //   late DatabaseReference userRef;
 
-    @override
-    void initState() {
-      super.initState();
-      userRef = FirebaseDatabase.instance.ref().child('USER');
-      Map<String, String> user = {
-        'username': user_name.text,
-        'email': e_mail.text,
-        'password': pass_word.text
-      };
-      userRef.push().set('USER');
-    }
-  }
+  //   @override
+  //   void initState() {
+  //     super.initState();
+  //     userRef = FirebaseDatabase.instance.ref().child('USER');
+  //     Map<String, String> user = {
+  //       'username': user_name.text,
+  //       'email': e_mail.text,
+  //       'password': pass_word.text
+  //     };
+  //     userRef.push().set('USER');
+  //   }
+  // }
 
   final form = GlobalKey<FormState>();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<int?> regirster() async {
-    try {
-      final user = (await _auth.createUserWithEmailAndPassword(
-              email: e_mail.text, password: pass_word.text))
-          .user;
+  // Future<int?> regirster() async {
+  //   try {
+  //     final user = (await _auth.createUserWithEmailAndPassword(
+  //             email: e_mail.text, password: pass_word.text))
+  //         .user;
 
-      if (user != null) {
-        print("user Created");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Color.fromARGB(255, 159, 39, 30),
-          content: Text("Register sucess"),
-        ));
-        // Navigator.of(context).pushReplacementNamed("/uploadImage");
-        return 1;
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
-      return 0;
+  //     if (user != null) {
+  //       print("user Created");
+  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //         backgroundColor: Color.fromARGB(255, 159, 39, 30),
+  //         content: Text("Register sucess"),
+  //       ));
+  //       // Navigator.of(context).pushReplacementNamed("/uploadImage");
+  //       return 1;
+  //     }
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(SnackBar(content: Text(e.toString())));
+  //     return 0;
+  //   }
+  // }
+   late GlobalUIViewModel _ui;
+  late AuthViewModel _auth;
+
+  @override
+  void initState() {
+    _ui = Provider.of<GlobalUIViewModel>(context, listen: false);
+    _auth = Provider.of<AuthViewModel>(context, listen: false);
+    super.initState();
+  }
+
+
+  void register() async{
+    _ui.loadState(true);
+    try{
+      await _auth.register(
+          UserModel(
+              email: e_mail.text,
+              password: pass_word.text,
+        
+            username: user_name.text
+          )).then((value) => null)
+          .catchError((e){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message.toString())));
+      });
+    }catch(err){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(err.toString())));
     }
+    _ui.loadState(false);
   }
 
   Future setImage(ImageSource source) async {
@@ -293,15 +305,11 @@ class _mySignUpState extends State<mySign> {
                             onPressed: (() {
                               buttonPressed = !buttonPressed;
                               if (form.currentState!.validate()) {
-                                Future<int?> r = regirster();
-                                databaseReg();
-                                if (r == 1) {
-                                  addUser(user_name: user_name.text,email: e_mail.text,pass_word: pass_word.text,context: context);
-                                  ScaffoldMessenger.of(context).showSnackBar(
+                               register();
+                                ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content:
                                               Text("Login validation Sucess")));
-                                }
                               }
                             }),
                             child: Text(

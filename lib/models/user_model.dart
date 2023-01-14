@@ -1,53 +1,49 @@
-
 // To parse this JSON data, do
 //
 //     final userModel = userModelFromJson(jsonString);
 
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-UserModel? userModelFromJson(String str) =>
-    UserModel.fromJson(json.decode(str));
+UserModel? userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
 String userModelToJson(UserModel? data) => json.encode(data!.toJson());
 
 class UserModel {
-  UserModel({
-    this.userId,
-    this.fcmToken,
-    this.name,
-    this.username,
-    this.phone,
-  });
+    UserModel({
+        this.id,
+        this.username,
+        this.email,
+        this.password,
+        this.imageurl,
+        this.imagepath,
+        this.fcm,
+    });
 
-  String? userId;
-  String? fcmToken;
-  String? name;
-  String? username;
-  String? phone;
+    String? id;
+    String? username;
+    String? email;
+    String? password;
+    String? imageurl;
+    String? imagepath;
+    String? fcm;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        userId: json["user_id"],
-        fcmToken: json["fcm_token"],
-        name: json["name"],
+    factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        id: json["id"],
         username: json["username"],
-        phone: json["phone"],
-      );
-   factory UserModel.fromFirebaseSnapshot(Map<String, dynamic> json) => UserModel(
-        userId: json["user_id"],
-        fcmToken: json["fcm_token"],
-        name: json["name"],
-        username: json["username"],
-        phone: json["phone"],
-      );
-    
+        email: json["email"],
+        password: json["password"],
+        imageurl: json["imageurl"],
+        imagepath: json["imagepath"],
+        fcm: json["fcm"],
+    );
 
-  Map<String, dynamic> toJson() => {
-        "user_id": userId,
-        "fcm_token": fcmToken,
-        "name": name,
+    Map<String, dynamic> toJson() => {
+        "id": id,
         "username": username,
-        "phone": phone,
-      };
+        "email": email,
+        "password": password,
+        "imageurl": imageurl,
+        "imagepath": imagepath,
+        "fcm": fcm,
+    };
 }

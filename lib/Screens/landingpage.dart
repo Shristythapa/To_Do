@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:time_me/Screens/sign.dart';
 
+import '../viewModel/auth_view_model.dart';
 
-class LandingPage extends StatelessWidget {
-  const LandingPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MyLandingPage();
-    // return MaterialApp(
-    //   theme: ThemeData(
-    //     fontFamily: 'roboto',
-    //   ),
-    //   debugShowCheckedModeBanner: false,
-    //   home: MyLandingPage(),
-    // );
-  }
-}
+
 
 class MyLandingPage extends StatefulWidget {
   const MyLandingPage({super.key});
@@ -28,6 +17,22 @@ class MyLandingPage extends StatefulWidget {
 }
 
 class _MyLandingPageState extends State<MyLandingPage> {
+    late AuthViewModel _authViewModel;
+
+  void checkLogin() async{
+    await Future.delayed(Duration(seconds: 2));
+    if(_authViewModel.user==null){
+      Navigator.of(context).pushReplacementNamed("/login");
+    }else{
+      Navigator.of(context).pushReplacementNamed("/dashboard");
+    }
+  }
+  @override
+  void initState() {
+    _authViewModel = Provider.of<AuthViewModel>(context, listen: false);
+    checkLogin();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var deviceHeight = MediaQuery.of(context).size.height;
