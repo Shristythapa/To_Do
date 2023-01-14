@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:time_me/Screens/dashboard.dart';
 import 'package:time_me/models/user_model.dart';
 import 'package:time_me/services/google_sign_in_dart.dart';
 import 'package:time_me/Screens/login.dart';
@@ -13,8 +14,6 @@ import 'package:time_me/Screens/login.dart';
 import '../services/firebase_services.dart';
 import '../viewModel/auth_view_model.dart';
 import '../viewModel/global_ui_model_view.dart';
-
-
 
 //validation functions
 
@@ -90,7 +89,7 @@ class _mySignUpState extends State<mySign> {
   //     return 0;
   //   }
   // }
-   late GlobalUIViewModel _ui;
+  late GlobalUIViewModel _ui;
   late AuthViewModel _auth;
 
   @override
@@ -100,23 +99,24 @@ class _mySignUpState extends State<mySign> {
     super.initState();
   }
 
-
-  void register() async{
+  void register() async {
     _ui.loadState(true);
-    try{
-      await _auth.register(
-          UserModel(
+    try {
+      await _auth
+          .register(UserModel(
               email: e_mail.text,
               password: pass_word.text,
               imagepath: imagePath,
               imageurl: imageUrl,
-            username: user_name.text
-          )).then((value) => null)
-          .catchError((e){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message.toString())));
+              username: user_name.text))
+          .then((value) => null)
+          .catchError((e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.message.toString())));
       });
-    }catch(err){
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(err.toString())));
+    } catch (err) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(err.toString())));
     }
     _ui.loadState(false);
   }
@@ -135,17 +135,22 @@ class _mySignUpState extends State<mySign> {
           .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
-   void uploadImage(File file, String e_mail){
-      FirebaseService.storage.child("profile").child("$e_mail.jpg").putFile(file).then((p0) {
-        p0.ref.getDownloadURL().then((url) {
-          setState((){
-            imagePath=p0.ref.fullPath;
-            imageUrl=url;
-          });
+
+  void uploadImage(File file, String e_mail) {
+    FirebaseService.storage
+        .child("profile")
+        .child("$e_mail.jpg")
+        .putFile(file)
+        .then((p0) {
+      p0.ref.getDownloadURL().then((url) {
+        setState(() {
+          imagePath = p0.ref.fullPath;
+          imageUrl = url;
         });
       });
+    });
   }
- 
+
   @override
   Widget build(BuildContext context) {
     var deviceHeight = MediaQuery.of(context).size.height;
@@ -173,7 +178,8 @@ class _mySignUpState extends State<mySign> {
                             child: CircleAvatar(
                               backgroundColor: Colors.white,
                               backgroundImage: image != null
-                                  ? FileImage(File(image!.path)) as ImageProvider
+                                  ? FileImage(File(image!.path))
+                                      as ImageProvider
                                   : AssetImage('images/profile.png'),
                               radius: 80,
                             ),
@@ -319,11 +325,17 @@ class _mySignUpState extends State<mySign> {
                             onPressed: (() {
                               buttonPressed = !buttonPressed;
                               if (form.currentState!.validate()) {
-                               register();
+                                uploadImage(image!, email);
+                                register();
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
-                                              Text("Login validation Sucess")));
+                                    SnackBar(
+                                        content:
+                                            Text("Login validation Sucess")));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Dashboard()),
+                                );
                               }
                             }),
                             child: Text(
@@ -387,7 +399,10 @@ class _mySignUpState extends State<mySign> {
                             ),
                             onTap: () {
                               Navigator.of(context).pop();
-                              Navigator.push(context,  MaterialPageRoute(builder: (context) => const LogIn()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LogIn()));
                             },
                           )),
                         )
