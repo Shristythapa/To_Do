@@ -10,6 +10,7 @@ import 'package:time_me/models/user_model.dart';
 import 'package:time_me/services/google_sign_in_dart.dart';
 import 'package:time_me/Screens/login.dart';
 
+import '../services/firebase_services.dart';
 import '../viewModel/auth_view_model.dart';
 import '../viewModel/global_ui_model_view.dart';
 
@@ -40,6 +41,8 @@ class _mySignUpState extends State<mySign> {
   TextEditingController pass_word = new TextEditingController();
   FocusNode myFocusNode = new FocusNode();
   File? image;
+  String? imagePath;
+  String? imageUrl;
 
   static bool validate(String email,
       [bool allowTopLevelDomains = false, bool allowInternational = true]) {
@@ -105,7 +108,8 @@ class _mySignUpState extends State<mySign> {
           UserModel(
               email: e_mail.text,
               password: pass_word.text,
-        
+              imagepath: imagePath,
+              imageurl: imageUrl,
             username: user_name.text
           )).then((value) => null)
           .catchError((e){
@@ -131,7 +135,17 @@ class _mySignUpState extends State<mySign> {
           .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
-
+   void uploadImage(File file, String e_mail){
+      FirebaseService.storage.child("profile").child("$e_mail.jpg").putFile(file).then((p0) {
+        p0.ref.getDownloadURL().then((url) {
+          setState((){
+            imagePath=p0.ref.fullPath;
+            imageUrl=url;
+          });
+        });
+      });
+  }
+ 
   @override
   Widget build(BuildContext context) {
     var deviceHeight = MediaQuery.of(context).size.height;

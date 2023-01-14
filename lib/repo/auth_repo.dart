@@ -19,6 +19,7 @@ class AuthRepository{
 
       user.id = _uc.user!.uid;
       user.fcm = "";
+     
       // insert into firestore user table
       await FirebaseService.db.collection('users').add(user.toJson());
       return _uc;
@@ -26,7 +27,7 @@ class AuthRepository{
       rethrow;
     }
   }
-
+  
 
   Future<UserCredential> login(String email, String password) async {
     try {
