@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:time_me/Screens/dashboard.dart';
 import 'package:time_me/Screens/login.dart';
 import 'package:time_me/Screens/sign.dart';
+import 'package:time_me/services/google_sign_in_dart.dart';
 import 'package:time_me/viewModel/auth_view_model.dart';
 import 'package:time_me/viewModel/global_ui_model_view.dart';
 import 'Screens/landingpage.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider (create: (_) => GlobalUIViewModel()),
         ChangeNotifierProvider (create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_)=> GoogleSignInProvider())
       ],
       child: GlobalLoaderOverlay(
         useDefaultLoading: false,
