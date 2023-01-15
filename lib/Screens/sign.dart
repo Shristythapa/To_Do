@@ -64,7 +64,7 @@ class _mySignUpState extends State<mySign> {
   //     userRef.push().set('USER');
   //   }
   // }
-
+  final user = FirebaseAuth.instance.currentUser!;
   final form = GlobalKey<FormState>();
   // final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -109,6 +109,26 @@ class _mySignUpState extends State<mySign> {
               imagepath: imagePath,
               imageurl: imageUrl,
               username: user_name.text))
+          .then((value) => null)
+          .catchError((e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.message.toString())));
+      });
+    } catch (err) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(err.toString())));
+    }
+    _ui.loadState(false);
+  }
+  void registerWithGoogle() async {
+    _ui.loadState(true);
+    try {
+      await _auth
+          .register(UserModel(
+              email: user.email,
+              imagepath: imagePath,
+              imageurl: user.photoURL,
+              username: user.displayName))
           .then((value) => null)
           .catchError((e) {
         ScaffoldMessenger.of(context)
@@ -369,6 +389,7 @@ class _mySignUpState extends State<mySign> {
                                 context,
                                 listen: false);
                             provider.googleLogin();
+                            registerWithGoogle();
                           }),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 146, 114, 174),
