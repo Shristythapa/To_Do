@@ -2,10 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do/Screens/tasks/task_list_screen.dart';
 import 'package:to_do/services/google_sign_in_dart.dart';
+import 'package:to_do/utilities/palette.dart';
 import 'package:to_do/viewModel/auth_view_model.dart';
 import 'package:to_do/viewModel/global_ui_model_view.dart';
-import 'Screens/dashboard.dart';
+import 'package:to_do/viewModel/task_view_model.dart';
 import 'Screens/landingpage.dart';
 import 'Screens/login.dart';
 import 'Screens/sign.dart';
@@ -22,7 +24,8 @@ Future<void> main() async {
     // ),
   );
   runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
+    theme: ThemeData(primarySwatch: Palette.kToDark),
+        debugShowCheckedModeBanner: false,
     home: const MyApp(),
   ));
 }
@@ -39,7 +42,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider (create: (_) => GlobalUIViewModel()),
         ChangeNotifierProvider (create: (_) => AuthViewModel()),
-        ChangeNotifierProvider(create: (_)=> GoogleSignInProvider())
+        ChangeNotifierProvider(create: (_)=> TaskViewModel()),
+       ChangeNotifierProvider(create: (_)=> GoogleSignInProvider())
+
       ],
       child: GlobalLoaderOverlay(
         useDefaultLoading: false,
@@ -65,7 +70,7 @@ class MyApp extends StatelessWidget {
                 "/login": (BuildContext context)=>LogIn(),
                 "/splash": (BuildContext context)=>MyLandingPage(),
                 "/register": (BuildContext context)=>mySign(),
-                "/dashboard": (BuildContext context)=>Dashboard(),
+                "/dashboard": (BuildContext context)=>DashBoard(),
               },
             );
           }

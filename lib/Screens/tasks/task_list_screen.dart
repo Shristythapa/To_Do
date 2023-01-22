@@ -3,6 +3,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 
+import 'add_task_screen.dart';
+
 
 class DashBoard extends StatefulWidget {
   const DashBoard({super.key});
@@ -89,8 +91,7 @@ class _DashBoardState extends State<DashBoard> {
                 DateTime? pickedDate = await showDatePicker(
                     context: context,
                     initialDate: dateInput,
-                    firstDate: DateTime(1950),
-                    //DateTime.now() - not to allow to choose before today.
+                    firstDate: DateTime.now(), //- not to allow to choose before today.
                     lastDate: DateTime(2100));
 
                 if (pickedDate == null) {
@@ -182,9 +183,9 @@ class _DashBoardState extends State<DashBoard> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xff7889B5),
         onPressed: (() {
-          // Navigator.pop(context);
-          // Navigator.push(context,
-          //     MaterialPageRoute(builder: (context) => const AddTask()));
+          Navigator.pop(context);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddTask()));
         }),
         tooltip: 'Increment',
         child: const Icon(Icons.add),

@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do/Screens/sign.dart';
-
-import 'dashboard.dart';
+import 'package:to_do/Screens/tasks/task_list_screen.dart';
 
 
 class LogIn extends StatefulWidget {
@@ -34,7 +33,7 @@ class _LogInState extends State<LogIn> {
           
         Navigator.of(context).pop();
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Dashboard()));
+            context, MaterialPageRoute(builder: (context) =>  DashBoard()));
       });
     } catch (e) {
       ScaffoldMessenger.of(context)

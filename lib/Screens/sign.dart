@@ -7,13 +7,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do/Screens/tasks/task_list_screen.dart';
 
 import '../models/user_model.dart';
 import '../services/firebase_services.dart';
 import '../services/google_sign_in_dart.dart';
 import '../viewModel/auth_view_model.dart';
 import '../viewModel/global_ui_model_view.dart';
-import 'dashboard.dart';
+
 import 'login.dart';
 
 //validation functions
@@ -362,7 +363,7 @@ class _mySignUpState extends State<mySign> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Dashboard()),
+                                        builder: (context) => DashBoard()),
                                   );
                                 });
                               }

@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do/repo/auth_repo.dart';
+import 'package:to_do/viewModel/task_view_model.dart';
 
+import '../../models/task_model.dart';
+import '../../viewModel/auth_view_model.dart';
+import '../../viewModel/global_ui_model_view.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -12,53 +18,87 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  
   TextEditingController taskController = new TextEditingController();
-   TextEditingController dateController = new TextEditingController();
-   TextEditingController timeController = new TextEditingController();
-    DateTime? pickedDate;
+  TextEditingController dateController = new TextEditingController();
+  TextEditingController timeController = new TextEditingController();
+  DateTime? pickedDate;
+  TimeOfDay _time = TimeOfDay.now();
 
-     TimeOfDay _time = TimeOfDay.now();
-
-  void _selectDate() async{
+  void _selectDate() async {
     pickedDate = await showDatePicker(
-                      context: context,
-                       initialDate: DateTime.now(), //get today's date
-                      firstDate:DateTime.now(), //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime(2101)
-                  );
-                  if(pickedDate != null ){
-                      print(pickedDate);  //get the picked date in the format => 2022-07-04 00:00:00.000
-                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate!); // format date in required form here we use yyyy-MM-dd that means time is removed
-                      print(formattedDate); //formatted date output using intl package =>  2022-07-04
-                        //You can format date as per your need
+        context: context,
+        initialDate: DateTime.now(), //get today's date
+        firstDate: DateTime
+            .now(), //DateTime.now() - not to allow to choose before today.
+        lastDate: DateTime(2101));
+    if (pickedDate != null) {
+      print(
+          pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
+      String formattedDate = DateFormat('yyyy-MM-dd').format(
+          pickedDate!); // format date in required form here we use yyyy-MM-dd that means time is removed
+      print(
+          formattedDate); //formatted date output using intl package =>  2022-07-04
+      //You can format date as per your need
 
-                      setState(() {
-                         dateController.text = formattedDate; //set foratted date to TextField value. 
-                      });
-                  }else{
-                      print("Date is not selected");
-                  }
+      setState(() {
+        dateController.text =
+            formattedDate; //set foratted date to TextField value.
+      });
+    } else {
+      print("Date is not selected");
+    }
   }
 
   void _selectTime() async {
     final TimeOfDay? newTime = await showTimePicker(
       context: context,
       initialTime: _time,
-     
     );
     if (newTime != null) {
       setState(() {
         _time = newTime;
-        
       });
-      String formatedTime =_time.format(context);
+      String formatedTime = _time.format(context);
       setState(() {
-        timeController.text=formatedTime;
+        timeController.text = formatedTime;
       });
     }
   }
-    
+
+  // database
+  late GlobalUIViewModel _ui;
+  late AuthViewModel _auth;
+  late TaskViewModel _task;
+
+  @override
+  void initState() {
+    _ui = Provider.of<GlobalUIViewModel>(context, listen: false);
+    _auth = Provider.of<AuthViewModel>(context, listen: false);
+    _task = Provider.of<TaskViewModel>(context, listen: false);
+    super.initState();
+  }
+
+  Future<void> addTask() async {
+    _ui.loadState(true);
+    var user_id = _auth.user!.uid;
+    try {
+      await _task
+          .addTask(Task(
+              userId: user_id,
+              task: taskController.text,
+              date: dateController.text,
+              time: timeController.text))
+          .then((value) => null)
+          .catchError((e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.message.toString())));
+      });
+    } catch (err) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(err.toString())));
+    }
+    _ui.loadState(false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,11 +121,10 @@ class _AddTaskState extends State<AddTask> {
             child: TextFormField(
               controller: taskController,
               decoration: InputDecoration(
-                 border: OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                   labelText: "Task",
                   labelStyle: TextStyle(
                     fontSize: 20,
-                    
                   ),
                   hintStyle: TextStyle(
                       fontSize: 18,
@@ -96,37 +135,36 @@ class _AddTaskState extends State<AddTask> {
             ), //TextField
           ),
           ListTile(
-           
-           title: TextFormField(
-        controller: dateController, //editing controller of this TextField
-          decoration: const InputDecoration( 
+            title: TextFormField(
+                controller:
+                    dateController, //editing controller of this TextField
+                decoration: const InputDecoration(
                     icon: Icon(Icons.calendar_today), //icon of text field
-                   labelText: "Enter Date" //label text of field
-            ),
-           readOnly: true,  // when true user cannot edit text 
-           onTap: () async {
-                _selectDate();  
-            }
-  ),
-           
-          
+                    labelText: "Enter Date" //label text of field
+                    ),
+                readOnly: true, // when true user cannot edit text
+                onTap: () async {
+                  _selectDate();
+                }),
           ),
           ListTile(
               title: TextFormField(
-        controller: timeController, //editing controller of this TextField
-          decoration: const InputDecoration( 
-                    icon: Icon(Icons.access_time), //icon of text field
-                   labelText: "Enter Time" //label text of field
-            ),
+            controller: timeController, //editing controller of this TextField
+            decoration: const InputDecoration(
+                icon: Icon(Icons.access_time), //icon of text field
+                labelText: "Enter Time" //label text of field
+                ),
             readOnly: true,
             onTap: () async {
-               _selectTime();
-            },)
-          ),
+              _selectTime();
+            },
+          )),
           Padding(
             padding: EdgeInsets.all(20),
             child: ElevatedButton(
-              onPressed: (() {}),
+              onPressed: (() {
+                addTask();
+              }),
               child: Text("SAVE"),
             ),
           )
