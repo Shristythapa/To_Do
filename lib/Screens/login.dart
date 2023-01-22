@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:to_do/Screens/sign.dart';
 
-import 'package:time_me/Screens/sign.dart';
+import 'dashboard.dart';
+
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -31,9 +31,10 @@ class _LogInState extends State<LogIn> {
           .then((value) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Login validation Sucess")));
-        // Navigator.of(context).pop();
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => const Settings()));
+          
+        Navigator.of(context).pop();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const Dashboard()));
       });
     } catch (e) {
       ScaffoldMessenger.of(context)

@@ -4,16 +4,17 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:time_me/Screens/dashboard.dart';
-import 'package:time_me/models/user_model.dart';
-import 'package:time_me/services/google_sign_in_dart.dart';
-import 'package:time_me/Screens/login.dart';
 
+import '../models/user_model.dart';
 import '../services/firebase_services.dart';
+import '../services/google_sign_in_dart.dart';
 import '../viewModel/auth_view_model.dart';
 import '../viewModel/global_ui_model_view.dart';
+import 'dashboard.dart';
+import 'login.dart';
 
 //validation functions
 
@@ -64,9 +65,10 @@ class _mySignUpState extends State<mySign> {
   //     userRef.push().set('USER');
   //   }
   // }
-  final user = FirebaseAuth.instance.currentUser!;
+
+  ///final GoogleSignInAccount user= GoogleSignInProvider().user;======================================================
   final form = GlobalKey<FormState>();
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  final user =FirebaseAuth.instance.currentUser;
 
   // Future<int?> regirster() async {
   //   try {
@@ -91,9 +93,11 @@ class _mySignUpState extends State<mySign> {
   // }
   late GlobalUIViewModel _ui;
   late AuthViewModel _auth;
+  late GoogleSignInProvider _google;
 
   @override
   void initState() {
+    _google = Provider.of<GoogleSignInProvider>(context, listen: false);
     _ui = Provider.of<GlobalUIViewModel>(context, listen: false);
     _auth = Provider.of<AuthViewModel>(context, listen: false);
     super.initState();
@@ -125,10 +129,9 @@ class _mySignUpState extends State<mySign> {
     try {
       await _auth
           .register(UserModel(
-              email: user.email,
-              imagepath: imagePath,
-              imageurl: user.photoURL,
-              username: user.displayName))
+              email: user?.email,
+              imageurl: user?.photoURL,
+              username: user?.displayName))
           .then((value) => null)
           .catchError((e) {
         ScaffoldMessenger.of(context)
@@ -156,19 +159,17 @@ class _mySignUpState extends State<mySign> {
     }
   }
 
-  void uploadImage(File file, String e_mail) {
-    FirebaseService.storage
+  Future<void> uploadImage(File file, String e_mail) async {
+    var p0  = await FirebaseService.storage
         .child("profile")
         .child("$e_mail.jpg")
-        .putFile(file)
-        .then((p0) {
-      p0.ref.getDownloadURL().then((url) {
+        .putFile(file);
+        
+      var url = await p0.ref.getDownloadURL();
         setState(() {
           imagePath = p0.ref.fullPath;
           imageUrl = url;
         });
-      });
-    });
   }
 
   @override
@@ -196,12 +197,17 @@ class _mySignUpState extends State<mySign> {
                         InkWell(
                           child: Center(
                             child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              backgroundImage: image != null
-                                  ? FileImage(File(image!.path))
-                                      as ImageProvider
-                                  : AssetImage('images/profile.png'),
-                              radius: 80,
+                              
+                              backgroundColor:  Color(0xFF6D3F83),
+                              radius: 85,
+                              child: CircleAvatar(
+                              
+                                backgroundImage: image != null
+                                    ? FileImage(File(image!.path))
+                                        as ImageProvider
+                                    : AssetImage('images/dummyProfileImage.jfif'),
+                                radius: 80,
+                              ),
                             ),
                           ),
                           onTap: (() {
@@ -344,18 +350,21 @@ class _mySignUpState extends State<mySign> {
                             },
                             onPressed: (() {
                               buttonPressed = !buttonPressed;
+                              // if (true) {
                               if (form.currentState!.validate()) {
-                                uploadImage(image!, email);
-                                register();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content:
-                                            Text("Login validation Sucess")));
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Dashboard()),
-                                );
+                                uploadImage(image!, email).then((value) {
+                                  print("Register"+imagePath.toString());
+                                  register();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("Login validation Sucess")));
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Dashboard()),
+                                  );
+                                });
                               }
                             }),
                             child: Text(
@@ -374,30 +383,37 @@ class _mySignUpState extends State<mySign> {
                             ),
                           ),
                         ),
-                        ElevatedButton.icon(
-                          onHover: (value) {
-                            setState(() {
-                              !buttonPressed;
-                              ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF6D3F83),
-                                  foregroundColor:
-                                      Color.fromARGB(255, 146, 114, 174));
-                            });
-                          },
-                          onPressed: (() {
-                            final provider = Provider.of<GoogleSignInProvider>(
-                                context,
-                                listen: false);
-                            provider.googleLogin();
-                            registerWithGoogle();
-                          }),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 146, 114, 174),
-                            foregroundColor: Color.fromARGB(255, 230, 211, 239),
+                        SizedBox(
+                           width: 100,
+                          height: 25,
+                        ),
+                        SizedBox(
+                    
+                          width: 100,
+                          height: 50,
+                          child: ElevatedButton.icon(
+                            onHover: (value) {
+                              setState(() {
+                                !buttonPressed;
+                                ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xFF6D3F83),
+                                    foregroundColor:
+                                        Color.fromARGB(255, 146, 114, 174));
+                              });
+                            },
+                            onPressed: (() {
+                             final provider = Provider.of<GoogleSignInProvider>(context,listen: false);
+                             provider.googleLogin();
+                             registerWithGoogle();
+                            }),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 146, 114, 174),
+                              foregroundColor: Color.fromARGB(255, 230, 211, 239),
+                            ),
+                            icon: FaIcon(FontAwesomeIcons.google,
+                                color: Colors.grey),
+                            label: Text('Sign Up with Google'),
                           ),
-                          icon: FaIcon(FontAwesomeIcons.google,
-                              color: Colors.grey),
-                          label: Text('Sign Up with Google'),
                         ),
                         SizedBox(
                           height: 10,

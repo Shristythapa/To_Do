@@ -1,4 +1,4 @@
-name: time_me
+name: to_do
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -45,6 +45,8 @@ dependencies:
   image_picker: ^0.8.6
   cloud_firestore: ^4.2.0
   firebase_storage: ^11.0.8
+  # flutter_local_icons: 
+ 
  
   
 dev_dependencies:
@@ -57,6 +59,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: "^0.11.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "images/sticky-note.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -70,9 +78,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/landing.jpg
-    - images/loginSignUp.jpg
-    - images/profile.png
+    - images/
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -92,6 +99,9 @@ flutter:
     - family: nerko
       fonts:
         - asset: fonts/NerkoOne-Regular.ttf
+    - family: baby
+      fonts:
+        - asset: fonts/ShortBaby-Mg2w.ttf
 
   #
   # For details regarding fonts from package dependencies,

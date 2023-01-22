@@ -2,13 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:time_me/Screens/dashboard.dart';
-import 'package:time_me/Screens/login.dart';
-import 'package:time_me/Screens/sign.dart';
-import 'package:time_me/services/google_sign_in_dart.dart';
-import 'package:time_me/viewModel/auth_view_model.dart';
-import 'package:time_me/viewModel/global_ui_model_view.dart';
+import 'package:to_do/services/google_sign_in_dart.dart';
+import 'package:to_do/viewModel/auth_view_model.dart';
+import 'package:to_do/viewModel/global_ui_model_view.dart';
+import 'Screens/dashboard.dart';
 import 'Screens/landingpage.dart';
+import 'Screens/login.dart';
+import 'Screens/sign.dart';
 
 
 Future<void> main() async {
@@ -33,7 +33,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -45,7 +44,7 @@ class MyApp extends StatelessWidget {
       child: GlobalLoaderOverlay(
         useDefaultLoading: false,
         overlayWidget: Center(
-          child: Image.asset("images/loader.gif", height: 100, width: 100,),
+          child: Image.asset("images/load-loading.gif", height: 100, width: 100,),
         ),
         child: Consumer<GlobalUIViewModel>(
           builder: (context, loader, child) {
@@ -55,17 +54,10 @@ class MyApp extends StatelessWidget {
               context.loaderOverlay.hide();
             }
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: ThemeData(
-                // This is the theme of your application.
-                //
-                // Try running your application with "flutter run". You'll see the
-                // application has a blue toolbar. Then, without quitting the app, try
-                // changing the primarySwatch below to Colors.green and then invoke
-                // "hot reload" (press "r" in the console where you ran "flutter run",
-                // or simply save your changes to "hot reload" in a Flutter IDE).
-                // Notice that the counter didn't reset back to zero; the application
-                // is not restarted.
+              
                 primarySwatch: Colors.blue,
               ),
               initialRoute: "/splash",

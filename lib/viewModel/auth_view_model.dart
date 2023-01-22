@@ -1,9 +1,11 @@
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:time_me/models/user_model.dart';
-import 'package:time_me/repo/auth_repo.dart';
-import 'package:time_me/services/firebase_services.dart';
+
+import '../models/user_model.dart';
+import '../repo/auth_repo.dart';
+import '../services/firebase_services.dart';
 
 class AuthViewModel with ChangeNotifier {
   User? _user = FirebaseService.firebaseAuth.currentUser;
@@ -21,6 +23,7 @@ class AuthViewModel with ChangeNotifier {
   }
 
   Future<void> register(UserModel user) async {
+    print(user.toJson());
     try {
       var response = await AuthRepository().register(user);
       _user = response!.user;

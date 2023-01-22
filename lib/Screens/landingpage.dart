@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
-import 'package:time_me/Screens/sign.dart';
+import 'package:to_do/Screens/sign.dart';
 
 import '../viewModel/auth_view_model.dart';
 
@@ -39,47 +39,48 @@ class _MyLandingPageState extends State<MyLandingPage> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage("images/landing.jpg"), fit: BoxFit.cover),
+            image: AssetImage("images/landing.png"), fit: BoxFit.cover),
       ),
       child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: Container(
-            width: deviceWidth,
-            height: deviceHeight,
-            margin: EdgeInsets.symmetric(
-                vertical: deviceHeight / 100 * 45,
-                horizontal: deviceWidth / 100 * 30),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: 400,
-              ),
-
-              ///padding: EdgeInsets.only(top: deviceHeight/100*40),
-              // margin:EdgeInsets.only(top: deviceHeight/100*5),
-
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF6D3F83),
-                  foregroundColor: Colors.white,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
+          body: Center(
+            child: Container(
+              width: deviceWidth,
+              height: deviceHeight,
+              margin: EdgeInsets.fromLTRB(80, deviceHeight*0.8, 80, 80),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 400,
                 ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => mySign()),
-                  );
-                },
-                child: Text(
-                  "Sign Up",
-                  style: TextStyle(fontSize: 35),
+          
+                ///padding: EdgeInsets.only(top: deviceHeight/100*40),
+                // margin:EdgeInsets.only(top: deviceHeight/100*5),
+          
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:Colors.white,
+                    foregroundColor: Color(0xFF6D3F83),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => mySign()),
+                    );
+                  },
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, fontFamily: "baby"),
+                  ),
                 ),
               ),
             ),
           )),
     );
   }
+  
 }
