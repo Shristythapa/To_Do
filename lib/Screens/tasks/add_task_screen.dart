@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do/Screens/tasks/task_list_screen.dart';
 import 'package:to_do/repo/auth_repo.dart';
 import 'package:to_do/viewModel/task_view_model.dart';
 
@@ -98,6 +99,9 @@ class _AddTaskState extends State<AddTask> {
           .showSnackBar(SnackBar(content: Text(err.toString())));
     }
     _ui.loadState(false);
+    Navigator.pop(context);
+    Navigator.push(context,
+    MaterialPageRoute(builder: (context) => const DashBoard()));
   }
 
   @override
@@ -106,9 +110,9 @@ class _AddTaskState extends State<AddTask> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              // Navigator.pop(context);
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => const DashBoard()));
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const DashBoard()));
             },
             icon: Icon(Icons.arrow_back)),
         title: Text("Add Task"),
@@ -164,6 +168,7 @@ class _AddTaskState extends State<AddTask> {
             child: ElevatedButton(
               onPressed: (() {
                 addTask();
+
               }),
               child: Text("SAVE"),
             ),
