@@ -12,9 +12,16 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Text("I am dashboard"),
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+
+          child: Text("I am dashboard"),
+        ),
+        floatingActionButton: FloatingActionButton(onPressed:() {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/settings');
+        },),
       ),
     );
   }

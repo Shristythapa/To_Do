@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do/Screens/settings/user_settings.dart';
 import 'package:to_do/Screens/sign.dart';
 
 import 'dashboard.dart';
@@ -33,8 +34,7 @@ class _LogInState extends State<LogIn> {
             .showSnackBar(SnackBar(content: Text("Login validation Sucess")));
           
         Navigator.of(context).pop();
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Dashboard()));
+        Navigator.pushNamed(context,'/dashboard');
       });
     } catch (e) {
       ScaffoldMessenger.of(context)
