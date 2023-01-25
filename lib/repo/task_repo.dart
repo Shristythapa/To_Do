@@ -21,10 +21,14 @@ class TaskRepo {
     }
   }
 
-  Stream<QuerySnapshot<Task>> getData()  {
-    Stream<QuerySnapshot<Task>> response = taskRef
-        .snapshots();
-    return response;
+   Future<List<QueryDocumentSnapshot<Task>>> getTask(String user_id)  async{
+     try{
+      final response = await taskRef.where('user_id',isEqualTo: user_id).get();
+      var task = response.docs;
+      return task;
+     }catch(err){
+      rethrow;
+     }
   }
 
 }

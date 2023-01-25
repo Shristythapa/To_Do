@@ -6,20 +6,39 @@ import '../models/task_model.dart';
 
 class TaskViewModel with ChangeNotifier{
   TaskRepo _taskRepo = TaskRepo();
-  Stream<QuerySnapshot<Task>>? _tasks;
-  Stream<QuerySnapshot<Task>>? get tasks => _tasks;
   
-  Future<void> getTasks() async{
-    var response = _taskRepo.getData();
+  List<Task> _allTask =[];
+  List<Task> get allTask => _allTask;
+  
+  
 
-    _tasks = response;
-    notifyListeners();//changes has been made
-  }
+
+
+
   Future<void> addTask(Task task ) async{
     try{
       await TaskRepo().addTask(task: task);
     } catch(err){
       rethrow;
     }
+  }
+
+
+  Future<List<Task>> getTask(String user_id) async{
+      _allTask=[];
+      notifyListeners();
+      try{
+        var response = await _taskRepo.getTask(user_id);
+        for(var element in response){
+          _allTask.add(element.data());
+        
+        }
+      
+        notifyListeners();
+      }catch(e){
+        _allTask=[];
+        notifyListeners();
+      }
+      return _allTask;
   }
 }

@@ -16,20 +16,20 @@ class MyLandingPage extends StatefulWidget {
 class _MyLandingPageState extends State<MyLandingPage> {
   late AuthViewModel _authViewModel;
 
-  // void checkLogin() async{
-  //   await Future.delayed(Duration(seconds: 2));
-  //   if(_authViewModel.user==null){
-  //     Navigator.of(context).pushReplacementNamed("/splash");
-  //   }else{
-  //     Navigator.of(context).pushReplacementNamed("/dashboard");
-  //   }
-  // }
-  // @override
-  // void initState() {
-  //   _authViewModel = Provider.of<AuthViewModel>(context, listen: false);
-  //   checkLogin();
-  //   super.initState();
-  // }
+  void checkLogin() async{
+    await Future.delayed(Duration(seconds: 2));
+    if(_authViewModel.user==null){
+      Navigator.of(context).pushReplacementNamed("/splash");
+    }else{
+      Navigator.of(context).pushReplacementNamed("/dashboard");
+    }
+  }
+  @override
+  void initState() {
+    _authViewModel = Provider.of<AuthViewModel>(context, listen: false);
+    checkLogin();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var deviceHeight = MediaQuery.of(context).size.height;

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do/Screens/sign.dart';
+import 'package:to_do/Screens/tasks/task_list.dart';
 import 'package:to_do/Screens/tasks/task_list_screen.dart';
 
 
@@ -47,7 +48,7 @@ class _LogInState extends State<LogIn> {
     var deviceWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage('images/loginSignUp.jpg'), fit: BoxFit.cover)),
       child: Scaffold(
@@ -66,7 +67,7 @@ class _LogInState extends State<LogIn> {
                         Container(
                           padding:
                               EdgeInsets.only(top: deviceHeight / 100 * 10),
-                          child: Text(
+                          child: const Text(
                             "Login",
                             style: TextStyle(
                                 color: Color.fromARGB(255, 146, 114, 174),
