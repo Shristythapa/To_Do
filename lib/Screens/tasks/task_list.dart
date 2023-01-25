@@ -18,11 +18,14 @@ class _DashBoardState extends State<DashBoard> {
   late TaskViewModel _taskViewModel;
   late AuthViewModel _authViewModel;
   late Future<List<Task>> myTasks;
+   bool boxChecked=false;
+  
   @override
   void initState() {
     _taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
     _authViewModel=Provider.of<AuthViewModel>(context, listen: false);
     myTasks=_taskViewModel.getTask(_authViewModel.user!.uid);
+  
     super.initState();
   }
 
@@ -64,6 +67,7 @@ class _DashBoardState extends State<DashBoard> {
                 snapshot.connectionState == ConnectionState.done) {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
+                
                 itemBuilder: (context, index) {
               
                 return Container(
@@ -73,7 +77,23 @@ class _DashBoardState extends State<DashBoard> {
                     child: ListTile(
 
                         // style: ListTileStyle.,
-                        leading: const Icon(Icons.check_box),
+                        leading: boxChecked? InkWell(
+                          onTap: () {
+                            setState(() {
+                              
+                            });
+                          },
+                          child: Icon(Icons.radio_button_unchecked_outlined),
+                        ):InkWell(
+                          onTap: () {
+                            setState(() {
+                              boxChecked=!boxChecked;
+                            });
+                             
+                          },
+                          child: Icon(Icons.check_box)
+                        ),
+                      
 
 
                         
