@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do/Screens/tasks/task_tile.dart';
 import 'package:to_do/services/firebase_services.dart';
 import '../../viewModel/auth_view_model.dart';
 import '../../viewModel/task_view_model.dart';
@@ -25,6 +26,7 @@ class _DashBoardState extends State<DashBoard> {
     _taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
     _authViewModel=Provider.of<AuthViewModel>(context, listen: false);
     myTasks=_taskViewModel.getTask(_authViewModel.user!.uid);
+    
   
     super.initState();
   }
@@ -69,41 +71,42 @@ class _DashBoardState extends State<DashBoard> {
                 itemCount: snapshot.data!.length,
                 
                 itemBuilder: (context, index) {
+                  return TaskTile(snapshot.data!.elementAt(index).status, snapshot.data!.elementAt(index).task);
               
-                return Container(
-                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-                  child: Card(
-                    elevation: 2,
-                    child: ListTile(
+                // return Container(
+                //   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+                //   child: Card(
+                //     elevation: 2,
+                //     child: ListTile(
 
-                        // style: ListTileStyle.,
-                        leading: boxChecked? InkWell(
-                          onTap: () {
-                            setState(() {
+                //         // style: ListTileStyle.,
+                //         leading: boxChecked? InkWell(
+                //           onTap: () {
+                //             setState(() {
                               
-                            });
-                          },
-                          child: Icon(Icons.radio_button_unchecked_outlined),
-                        ):InkWell(
-                          onTap: () {
-                            setState(() {
-                              boxChecked=!boxChecked;
-                            });
+                //             });
+                //           },
+                //           child: Icon(Icons.radio_button_unchecked_outlined),
+                //         ):InkWell(
+                //           onTap: () {
+                //             setState(() {
+                //               boxChecked=!boxChecked;
+                //             });
                              
-                          },
-                          child: Icon(Icons.check_box)
-                        ),
+                //           },
+                //           child: Icon(Icons.check_box)
+                //         ),
                       
 
 
                         
-                        trailing: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                        title: Text(snapshot.data!.elementAt(index).task)),
-                  ),
-                );
+                //         trailing: const Icon(
+                //           Icons.delete,
+                //           color: Colors.red,
+                //         ),
+                //         title: Text(snapshot.data!.elementAt(index).task)),
+                //   ),
+                // );
               });
             } else {
               return Center(child: CircularProgressIndicator());
@@ -123,3 +126,4 @@ class _DashBoardState extends State<DashBoard> {
     );
   }
 }
+

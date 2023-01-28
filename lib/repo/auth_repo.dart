@@ -38,6 +38,7 @@ class AuthRepository{
       rethrow;
     }
   }
+  
 
 
   Future<void> logout() async {

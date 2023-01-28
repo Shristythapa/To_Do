@@ -1,3 +1,5 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/services/firebase_services.dart';
@@ -15,7 +17,7 @@ class TaskRepo {
     Map<String, dynamic> jsonAccount = task.toJson();
 
     try {
-      await taskRef.add(task);
+      await taskRef.doc().set(task);
     } catch (err) {
       rethrow;
     }

@@ -89,7 +89,7 @@ class _AddTaskState extends State<AddTask> {
               task: taskController.text,
               date: dateController.text,
               time: timeController.text,
-              status: 0))
+              status: false,))
           .then((value) => null)
           .catchError((e) {
         ScaffoldMessenger.of(context)
