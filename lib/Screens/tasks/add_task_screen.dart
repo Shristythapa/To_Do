@@ -85,6 +85,7 @@ class _AddTaskState extends State<AddTask> {
     try {
       await _task
           .addTask(Task(
+              id: "",
               userId: user_id,
               task: taskController.text,
               date: dateController.text,

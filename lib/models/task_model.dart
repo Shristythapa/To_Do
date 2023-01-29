@@ -13,6 +13,7 @@ String taskToJson(Task data) => json.encode(data.toJson());
 class Task {
     Task({
 
+        required this.id,
         required this.userId,
         required this.task,
         required this.date,
@@ -20,6 +21,7 @@ class Task {
         required this.status,
     });
 
+    String id;
     String userId;
 
     String task;
@@ -29,6 +31,7 @@ class Task {
 
     factory Task.fromJson(DocumentSnapshot<Map<String, dynamic>> json) => Task(
  
+        id:json["id"],
         userId:json["user_id"],
         task: json["task"],
         date: json["date"],
@@ -47,6 +50,7 @@ class Task {
     
       factory Task.fromFirebaseSnapshot(DocumentSnapshot<Map<String, dynamic>> json) => Task(
    
+    id:json.id,
     userId:json["user_id"],
     
     task: json["task"],

@@ -33,96 +33,73 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //appbar
-      appBar: AppBar(
-        backgroundColor: Color(0xff7889B5),
+    return Consumer<TaskViewModel>(
+      builder: (context, taskVM, child) {
+        return Scaffold(
+          //appbar
+          appBar: AppBar(
+            backgroundColor: Color(0xff7889B5),
 
-        //settings
-        leading: GestureDetector(
-          onTap: () {
-            // Navigator.pop(context);
-            // Navigator.push(
-            //   context,
-            //  // MaterialPageRoute(builder: (context) => Settings()),
-            // );
-          },
-          child: Icon(
-            Icons.settings,
-            color: Color(0xffD8D1E3),
-          ),
-        ),
-
-        //title
-        title: Center(
-            child: Text("Tasks",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25))),
-      ),
-      body: FutureBuilder<List<Task>>(
-          future: myTasks,
-          
-          builder: (context, snapshot) {
-            if (snapshot.hasData &&
-                snapshot.connectionState == ConnectionState.done) {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                
-                itemBuilder: (context, index) {
-                  return TaskTile(snapshot.data!.elementAt(index).status, snapshot.data!.elementAt(index).task);
-              
-                // return Container(
-                //   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-                //   child: Card(
-                //     elevation: 2,
-                //     child: ListTile(
-
-                //         // style: ListTileStyle.,
-                //         leading: boxChecked? InkWell(
-                //           onTap: () {
-                //             setState(() {
-                              
-                //             });
-                //           },
-                //           child: Icon(Icons.radio_button_unchecked_outlined),
-                //         ):InkWell(
-                //           onTap: () {
-                //             setState(() {
-                //               boxChecked=!boxChecked;
-                //             });
-                             
-                //           },
-                //           child: Icon(Icons.check_box)
-                //         ),
-                      
-
-
-                        
-                //         trailing: const Icon(
-                //           Icons.delete,
-                //           color: Colors.red,
-                //         ),
-                //         title: Text(snapshot.data!.elementAt(index).task)),
-                //   ),
+            //settings
+            leading: GestureDetector(
+              onTap: () {
+                // Navigator.pop(context);
+                // Navigator.push(
+                //   context,
+                //  // MaterialPageRoute(builder: (context) => Settings()),
                 // );
-              });
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          }),
+              },
+              child: Icon(
+                Icons.settings,
+                color: Color(0xffD8D1E3),
+              ),
+            ),
 
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xff7889B5),
-        onPressed: (() {
-          Navigator.pop(context);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AddTask()));
-        }),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+            //title
+            title: Center(
+                child: Text("Tasks",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25))),
+          ),
+          body: ListView(children: [
+            ...taskVM.allTask.map((e) => ElevatedButton(
+              onPressed: (){
+                print("TASK ID : " + e.id);
+              },
+              child: Text(e.task)))
+          ],),
+          // body: FutureBuilder<List<Task>>(
+          //     future: myTasks,
+              
+          //     builder: (context, snapshot) {
+          //       if (snapshot.hasData &&
+          //           snapshot.connectionState == ConnectionState.done) {
+          //         return ListView.builder(
+          //           itemCount: snapshot.data!.length,
+                    
+          //           itemBuilder: (context, index) {
+          //             return TaskTile(snapshot.data!.elementAt(index).status, snapshot.data!.elementAt(index).task);
+                  
+          //         });
+          //       } else {
+          //         return Center(child: CircularProgressIndicator());
+          //       }
+          //     }),
+
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Color(0xff7889B5),
+            onPressed: (() {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const AddTask()));
+            }),
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+        );
+      }
     );
   }
 }

@@ -1,7 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do/Screens/sign.dart';
 import 'package:to_do/Screens/tasks/task_list.dart';
+import 'package:to_do/viewModel/auth_view_model.dart';
+
+import '../services/google_sign_in_dart.dart';
+import '../viewModel/global_ui_model_view.dart';
 
 
 
@@ -22,12 +27,22 @@ class _LogInState extends State<LogIn> {
   final form = GlobalKey<FormState>();
   FocusNode myFocusNode = new FocusNode();
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+   late GlobalUIViewModel _ui;
+  late AuthViewModel _auth;
+  late GoogleSignInProvider _google;
+
+  @override
+  void initState() {
+    _google = Provider.of<GoogleSignInProvider>(context, listen: false);
+    _ui = Provider.of<GlobalUIViewModel>(context, listen: false);
+    _auth = Provider.of<AuthViewModel>(context, listen: false);
+    super.initState();
+  }
+
   Future<void> login() async {
     try {
       await _auth
-          .signInWithEmailAndPassword(
-              email: e_mail.text, password: pass_word.text.toString())
+          .login(e_mail.text, pass_word.text)
           .then((value) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Login validation Sucess")));
@@ -41,6 +56,7 @@ class _LogInState extends State<LogIn> {
           .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
+ 
 
   @override
   Widget build(BuildContext context) {
