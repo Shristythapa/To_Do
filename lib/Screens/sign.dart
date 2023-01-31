@@ -354,6 +354,9 @@ class _mySignUpState extends State<mySign> {
                               buttonPressed = !buttonPressed;
                               // if (true) {
                               if (form.currentState!.validate()) {
+                                print(
+                                  'sig'
+                                );
                                 uploadImage(image!, email).then((value) {
                                   print("Register"+imagePath.toString());
                                   register();

@@ -17,7 +17,7 @@ class TaskRepo {
     Map<String, dynamic> jsonAccount = task.toJson();
 
     try {
-      final docref = taskRef.doc();
+      var docref = taskRef.doc();
       task.id=docref.id;
       await docref.set(task);
     } catch (err) {
@@ -31,6 +31,15 @@ class TaskRepo {
       var task = response.docs;
       return task;
      }catch(err){
+      rethrow;
+     }
+  }
+
+  Future<void> deleteTask(String id) async{
+     try{
+      await taskRef.doc(id).delete();
+     }catch(e){
+      print(e);
       rethrow;
      }
   }

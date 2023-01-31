@@ -5,6 +5,7 @@ import 'package:to_do/Screens/tasks/task_tile.dart';
 import 'package:to_do/services/firebase_services.dart';
 import '../../viewModel/auth_view_model.dart';
 import '../../viewModel/task_view_model.dart';
+import '../settings/user_settings.dart';
 import 'add_task_screen.dart';
 import '../../models/task_model.dart';
 
@@ -18,14 +19,14 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   late TaskViewModel _taskViewModel;
   late AuthViewModel _authViewModel;
-  late Future<List<Task>> myTasks;
    bool boxChecked=false;
   
   @override
   void initState() {
     _taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
     _authViewModel=Provider.of<AuthViewModel>(context, listen: false);
-    myTasks=_taskViewModel.getTask(_authViewModel.user!.uid);
+    _taskViewModel = Provider.of<TaskViewModel>(context,listen: false);
+   
     
   
     super.initState();
@@ -43,17 +44,35 @@ class _DashBoardState extends State<DashBoard> {
             //settings
             leading: GestureDetector(
               onTap: () {
-                // Navigator.pop(context);
-                // Navigator.push(
-                //   context,
-                //  // MaterialPageRoute(builder: (context) => Settings()),
-                // );
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                 MaterialPageRoute(builder: (context) => Setting()),
+                );
               },
               child: Icon(
                 Icons.settings,
                 color: Color(0xffD8D1E3),
               ),
             ),
+            actions: [
+               GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                 MaterialPageRoute(builder: (context) => Setting()),
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.all(18),
+                child: Icon(
+                  Icons.notifications,
+                  color: Color(0xffD8D1E3),
+                ),
+              ),
+            ),
+            ],
 
             //title
             title: Center(
@@ -62,9 +81,10 @@ class _DashBoardState extends State<DashBoard> {
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 25))),
+                        
           ),
           body: ListView(children: [
-            ...taskVM.allTask.map((e) => TaskTile(e.status, e.task))
+            ...taskVM.allTask.map((e) => TaskTile(e.status, e.task,e.id))
           ],),
           // body: FutureBuilder<List<Task>>(
           //     future: myTasks,
