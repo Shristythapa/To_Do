@@ -25,20 +25,23 @@ class TaskViewModel with ChangeNotifier{
 
 
   Future<List<Task>> getTask(String user_id) async{
-      _allTask=[];
+   
       notifyListeners();
       try{
+        print(user_id);
         var response = await _taskRepo.getTask(user_id);
         for(var element in response){
           _allTask.add(element.data());
         
         }
       
-        notifyListeners();
+        
       }catch(e){
-        _allTask=[];
-        notifyListeners();
+        rethrow;
+        
       }
+      notifyListeners();
       return _allTask;
+
   }
 }

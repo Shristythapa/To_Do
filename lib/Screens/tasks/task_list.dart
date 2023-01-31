@@ -64,11 +64,7 @@ class _DashBoardState extends State<DashBoard> {
                         fontSize: 25))),
           ),
           body: ListView(children: [
-            ...taskVM.allTask.map((e) => ElevatedButton(
-              onPressed: (){
-                print("TASK ID : " + e.id);
-              },
-              child: Text(e.task)))
+            ...taskVM.allTask.map((e) => TaskTile(e.status, e.task))
           ],),
           // body: FutureBuilder<List<Task>>(
           //     future: myTasks,

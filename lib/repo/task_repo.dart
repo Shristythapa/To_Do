@@ -17,7 +17,9 @@ class TaskRepo {
     Map<String, dynamic> jsonAccount = task.toJson();
 
     try {
-      await taskRef.doc().set(task);
+      final docref = taskRef.doc();
+      task.id=docref.id;
+      await docref.set(task);
     } catch (err) {
       rethrow;
     }
