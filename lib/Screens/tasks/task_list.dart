@@ -83,9 +83,9 @@ class _DashBoardState extends State<DashBoard> {
                         fontSize: 25))),
                         
           ),
-          body: ListView(children: [
-            ...taskVM.allTask.map((e) => TaskTile(e.status, e.task,e.id))
-          ],),
+            body: ListView(children: [
+              ...taskVM.allTask.map((e) => TaskTile(e.status, e.task,e.id))
+            ],),
           // body: FutureBuilder<List<Task>>(
           //     future: myTasks,
               

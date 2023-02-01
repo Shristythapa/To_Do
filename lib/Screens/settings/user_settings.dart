@@ -121,6 +121,35 @@ class _SettingState extends State<Setting> {
                 ),
               ),
             ),
+             Card(
+              margin: EdgeInsets.only(right: 20, left: 20, top: 20),
+              color: Color.fromARGB(255, 239, 235, 241),
+              child: InkWell(
+                onTap: () {
+                  logout();
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(
+                            right: 70, left: 30, bottom: 25, top: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Log Out",
+                        style: TextStyle(
+                            backgroundColor: Colors.transparent,
+                            color: Color.fromARGB(255, 214, 32, 84),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Icon(
+                        Icons.logout,
+                        color: Color.fromARGB(255, 214, 32, 84),
+                      )
+                    ],
+                  ),
+                ),
+              ),)
           ],
         ));
   }
