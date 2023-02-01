@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Palette.kToDark,
              
             ),
-            initialRoute: "/splash",
+            initialRoute: "/login",
             routes: {
               "/login": (BuildContext context) => LogIn(),
               "/splash": (BuildContext context) => MyLandingPage(),

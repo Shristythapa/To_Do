@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do/Screens/forgotPassword.dart';
 import 'package:to_do/Screens/settings/user_settings.dart';
 import 'package:to_do/Screens/sign.dart';
 
@@ -172,6 +173,29 @@ class _LogInState extends State<LogIn> {
                         ),
                         SizedBox(
                           height: 40,
+                        ),
+                        InkWell(
+                          onTap: (() {
+                            Navigator.pop(context);
+                          Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const ForgotPassword()),
+  );
+                          }),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                               Text("Forgot Password?",
+                               style: TextStyle(
+                                  color: Color.fromARGB(255, 141, 125, 164),
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w500,
+                                ),)
+                            ],
+                          ),
+                        ),
+                         SizedBox(
+                          height: 20,
                         ),
                         SizedBox(
                           height: 50,
