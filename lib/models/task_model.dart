@@ -51,8 +51,7 @@ class Task {
       factory Task.fromFirebaseSnapshot(DocumentSnapshot<Map<String, dynamic>> json) => Task(
    
     id:json["id"],
-    userId:json["user_id"],
-    
+    userId:json["user_id"], 
     task: json["task"],
     date: json["date"],
     time: json["time"],

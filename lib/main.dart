@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -20,7 +20,8 @@ Future<void> main() async {
       // options: FirebaseOptions(
       //   apiKey: "AIzaSyDZopgwT3FXAHhsTs2c78yk-dw92lnnEK8",
       //   appId: "1:350617005648:web:64921c07aa521069b4ab55",
-      //   messagingSenderId: "350617005648",
+      //   messagingSenderId: "3
+      // 50617005648",
       //   projectId: "ToDo",
       // ),
       );
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider (create: (_) => GlobalUIViewModel()),
         ChangeNotifierProvider (create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_)=> TaskViewModel()),
-       ChangeNotifierProvider(create: (_)=> GoogleSignInProvider())
+        ChangeNotifierProvider(create: (_)=> GoogleSignInProvider())
 
       ],
       child: GlobalLoaderOverlay(

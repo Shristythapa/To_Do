@@ -1,10 +1,13 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../models/user_model.dart';
 import '../services/firebase_services.dart';
 
 
 class AuthRepository{
+  FirebaseStorage storage = FirebaseStorage.instance;
 
   Future<UserCredential?> register(UserModel user) async {
     try {
@@ -26,6 +29,15 @@ class AuthRepository{
     } catch (err) {
       rethrow;
     }
+  }
+  
+
+
+  Future<String> downoladUrl(String? image) async{
+    print("IamImage $image");
+    String downoladUrl =await storage.ref("profile/$image.jpg").getDownloadURL();
+    print("iamdownlodedurl $downoladUrl");
+    return downoladUrl;
   }
   
 

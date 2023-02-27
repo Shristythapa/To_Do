@@ -25,9 +25,11 @@ class _DashBoardState extends State<DashBoard> {
   void initState() {
     _taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
     _authViewModel=Provider.of<AuthViewModel>(context, listen: false);
-    _taskViewModel = Provider.of<TaskViewModel>(context,listen: false);
-   
-    
+  
+    try{
+
+    _taskViewModel.getTask(_authViewModel.user!.uid); 
+    }catch(e){}
   
     super.initState();
   }
@@ -84,25 +86,9 @@ class _DashBoardState extends State<DashBoard> {
                         
           ),
             body: ListView(children: [
-              ...taskVM.allTask.map((e) => TaskTile(e.status, e.task,e.id))
+              ...taskVM.allTask.map((e) => TaskTile(Task(date: e.date,id: e.id,task: e.task,userId: e.userId,time: e.time, status: e.status),e.status))
             ],),
-          // body: FutureBuilder<List<Task>>(
-          //     future: myTasks,
-              
-          //     builder: (context, snapshot) {
-          //       if (snapshot.hasData &&
-          //           snapshot.connectionState == ConnectionState.done) {
-          //         return ListView.builder(
-          //           itemCount: snapshot.data!.length,
-                    
-          //           itemBuilder: (context, index) {
-          //             return TaskTile(snapshot.data!.elementAt(index).status, snapshot.data!.elementAt(index).task);
-                  
-          //         });
-          //       } else {
-          //         return Center(child: CircularProgressIndicator());
-          //       }
-          //     }),
+      
 
           floatingActionButton: FloatingActionButton(
             backgroundColor: Color(0xff7889B5),
@@ -111,7 +97,7 @@ class _DashBoardState extends State<DashBoard> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const AddTask()));
             }),
-            tooltip: 'Increment',
+          
             child: const Icon(Icons.add),
           ),
         );

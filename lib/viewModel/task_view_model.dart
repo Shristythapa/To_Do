@@ -26,7 +26,6 @@ class TaskViewModel with ChangeNotifier{
 
   Future<List<Task>> getTask(String user_id) async{
      _allTask=[];
-      notifyListeners();
       try{
         print(user_id);
         var response = await _taskRepo.getTask(user_id);
@@ -44,12 +43,24 @@ class TaskViewModel with ChangeNotifier{
 
   }
 
-  Future<void> deleteTask(String id ) async{
+  Future<void> deleteTask(String id, String userId ) async{
+    
   
     try{
-      await TaskRepo().deleteTask(id);
+      await TaskRepo().deleteTask(id).then((value) =>_allTask= TaskRepo().getTask(userId) as List<Task>);
       notifyListeners();
     } catch(err){
+      rethrow;
+    }
+  }
+
+  Future<void> updateTask(Task task) async{
+    var doc = task.id;
+    try{
+      task.status=!task.status;
+      await TaskRepo().updateTask(task);
+      notifyListeners();
+    }catch(e){
       rethrow;
     }
   }

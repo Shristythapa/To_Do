@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:to_do/Screens/tasks/task_list.dart';
+import 'package:to_do/repo/auth_repo.dart';
 import 'package:to_do/viewModel/auth_view_model.dart';
 
 import '../../viewModel/global_ui_model_view.dart';
 
 class Setting extends StatefulWidget {
-  const Setting({super.key});
+ 
 
   @override
   State<Setting> createState() => _SettingState();
@@ -56,7 +57,22 @@ class _SettingState extends State<Setting> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Center(
+            FutureBuilder(
+              future: AuthRepository().downoladUrl(_auth.user!.email),
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                if (snapshot.hasData) {
+                  return Center(
+                    child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      radius: 85,
+                      child: CircleAvatar(
+                        radius: 80,
+                        backgroundImage: NetworkImage(snapshot.data!)
+                      ),
+                    ),
+                  );
+                }else{
+                  return Center(
               child: CircleAvatar(
                 backgroundColor: Color(0xFF6D3F83),
                 radius: 85,
@@ -65,6 +81,9 @@ class _SettingState extends State<Setting> {
                   radius: 80,
                 ),
               ),
+            );
+                }
+              },
             ),
             Card(
                 margin: EdgeInsets.only(right: 20, left: 20, top: 20),
@@ -99,8 +118,8 @@ class _SettingState extends State<Setting> {
                   logout();
                 },
                 child: Padding(
-                  padding: EdgeInsets.only(
-                            right: 70, left: 30, bottom: 25, top: 25),
+                  padding:
+                      EdgeInsets.only(right: 70, left: 30, bottom: 25, top: 25),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -121,7 +140,7 @@ class _SettingState extends State<Setting> {
                 ),
               ),
             ),
-             Card(
+            Card(
               margin: EdgeInsets.only(right: 20, left: 20, top: 20),
               color: Color.fromARGB(255, 239, 235, 241),
               child: InkWell(
@@ -129,8 +148,8 @@ class _SettingState extends State<Setting> {
                   logout();
                 },
                 child: Padding(
-                  padding: EdgeInsets.only(
-                            right: 70, left: 30, bottom: 25, top: 25),
+                  padding:
+                      EdgeInsets.only(right: 70, left: 30, bottom: 25, top: 25),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -149,7 +168,8 @@ class _SettingState extends State<Setting> {
                     ],
                   ),
                 ),
-              ),)
+              ),
+            )
           ],
         ));
   }

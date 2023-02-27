@@ -13,7 +13,7 @@ class MyLandingPage extends StatefulWidget {
 }
 
 class _MyLandingPageState extends State<MyLandingPage> {
-  late AuthViewModel _authViewModel;
+   late AuthViewModel _authViewModel;
 
   void checkLogin() async{
     await Future.delayed(Duration(seconds: 2));
@@ -31,6 +31,8 @@ class _MyLandingPageState extends State<MyLandingPage> {
   }
   @override
   Widget build(BuildContext context) {
+
+
     var deviceHeight = MediaQuery.of(context).size.height;
     var deviceWidth = MediaQuery.of(context).size.width;
     print(deviceHeight);
@@ -81,5 +83,4 @@ class _MyLandingPageState extends State<MyLandingPage> {
           )),
     );
   }
-  
 }
