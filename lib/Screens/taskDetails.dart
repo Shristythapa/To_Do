@@ -28,33 +28,7 @@ class _TaskDetailsState extends State<TaskDetails> {
 
     super.initState();
   }
-    void deleteTask(String id, String user) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text("Are you sure you want to delete"),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              _taskViewModel.deleteTask(id, user).then((value) =>
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Task deleted"))));
-              Navigator.of(context).pop();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const DashBoard()));
-            },
-            child: Text("Delete"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text("Cancel"),
-          ),
-        ],
-      ),
-    );
-  }
+    
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +149,13 @@ class _TaskDetailsState extends State<TaskDetails> {
             height: 50,
             child: ElevatedButton(
               onPressed: (() {
-                  deleteTask(widget.task.id, widget.task.userId);
+                  _taskViewModel.deleteTask(widget.task.id, widget.task.userId);
+               
+                        
+                          Navigator.of(context).pop();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const DashBoard()));
+                    
               }),
               style: ElevatedButton.styleFrom(
                 backgroundColor:Color(0xff7889B5),

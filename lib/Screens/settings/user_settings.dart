@@ -63,10 +63,10 @@ class _SettingState extends State<Setting> {
                 if (snapshot.hasData) {
                   return Center(
                     child: CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 85,
+                      backgroundColor: Color(0xff7889B5),
+                      radius: 95,
                       child: CircleAvatar(
-                        radius: 80,
+                        radius: 90,
                         backgroundImage: NetworkImage(snapshot.data!)
                       ),
                     ),
@@ -75,10 +75,10 @@ class _SettingState extends State<Setting> {
                   return Center(
               child: CircleAvatar(
                 backgroundColor: Color(0xFF6D3F83),
-                radius: 85,
+                radius: 95,
                 child: CircleAvatar(
                   backgroundImage: AssetImage('images/dummyProfileImage.jfif'),
-                  radius: 80,
+                  radius: 90,
                 ),
               ),
             );
@@ -87,13 +87,13 @@ class _SettingState extends State<Setting> {
             ),
             Card(
                 margin: EdgeInsets.only(right: 20, left: 20, top: 20),
-                color: Color.fromARGB(255, 239, 235, 241),
+                color:Colors.transparent,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Padding(
                         padding: EdgeInsets.only(
-                            right: 70, left: 30, bottom: 0, top: 10),
+                            right: 70, left: 30, bottom: 20, top: 10),
                         child: ListTile(
                           title: Text(
                             "Shristy Thapa",
@@ -110,39 +110,10 @@ class _SettingState extends State<Setting> {
                         ),
                       ),
                     ])),
+        
             Card(
               margin: EdgeInsets.only(right: 20, left: 20, top: 20),
-              color: Color.fromARGB(255, 239, 235, 241),
-              child: InkWell(
-                onTap: () {
-                  logout();
-                },
-                child: Padding(
-                  padding:
-                      EdgeInsets.only(right: 70, left: 30, bottom: 25, top: 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Log Out",
-                        style: TextStyle(
-                            backgroundColor: Colors.transparent,
-                            color: Color.fromARGB(255, 214, 32, 84),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.logout,
-                        color: Color.fromARGB(255, 214, 32, 84),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              margin: EdgeInsets.only(right: 20, left: 20, top: 20),
-              color: Color.fromARGB(255, 239, 235, 241),
+              color: Colors.transparent,
               child: InkWell(
                 onTap: () {
                   logout();
