@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,6 +6,7 @@ import 'package:to_do/Screens/tasks/task_list.dart';
 import 'package:to_do/repo/auth_repo.dart';
 import 'package:to_do/viewModel/auth_view_model.dart';
 
+import '../../models/user_model.dart';
 import '../../viewModel/global_ui_model_view.dart';
 
 class Setting extends StatefulWidget {
@@ -17,12 +19,17 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   late GlobalUIViewModel _ui;
   late AuthViewModel _auth;
+
   @override
   void initState() {
     _ui = Provider.of<GlobalUIViewModel>(context, listen: false);
     _auth = Provider.of<AuthViewModel>(context, listen: false);
+
     super.initState();
+    
+    
   }
+
 
   void logout() async {
     _ui.loadState(true);
@@ -43,6 +50,7 @@ class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 240, 240, 240),
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
@@ -54,10 +62,12 @@ class _SettingState extends State<Setting> {
           title: Text("User Profile"),
         ),
         body: Column(
+          
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            FutureBuilder(
+           
+               FutureBuilder(
               future: AuthRepository().downoladUrl(_auth.user!.email),
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                 if (snapshot.hasData) {
@@ -85,35 +95,45 @@ class _SettingState extends State<Setting> {
                 }
               },
             ),
-            Card(
+           FutureBuilder<DocumentSnapshot<UserModel>>(
+            future:AuthRepository().getUser(_auth.user!.uid),
+            builder:  (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+        return  Card(
                 margin: EdgeInsets.only(right: 20, left: 20, top: 20),
-                color:Colors.transparent,
+                color:Colors.white,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Padding(
+                    children:  [
+                    
+                        Padding(
                         padding: EdgeInsets.only(
                             right: 70, left: 30, bottom: 20, top: 10),
                         child: ListTile(
                           title: Text(
-                            "Shristy Thapa",
+                            "Email",
                             style: TextStyle(
                                 backgroundColor: Colors.transparent,
                                 fontSize: 20),
                           ),
                           subtitle: Text(
-                            "thapashristy110@gmail.com",
+                          _auth.user!.email.toString(),
                             style: TextStyle(
                                 backgroundColor: Colors.transparent,
                                 fontSize: 15),
                           ),
                         ),
                       ),
-                    ])),
+                    ]));
+          
+  }),
         
             Card(
               margin: EdgeInsets.only(right: 20, left: 20, top: 20),
-              color: Colors.transparent,
+              color: Colors.white,
               child: InkWell(
                 onTap: () {
                   logout();
@@ -140,7 +160,8 @@ class _SettingState extends State<Setting> {
                   ),
                 ),
               ),
-            )
+            ),
+            SizedBox(height: 40,)
           ],
         ));
   }

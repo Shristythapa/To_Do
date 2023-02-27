@@ -17,13 +17,7 @@ import 'Screens/tasks/task_list.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      // options: FirebaseOptions(
-      //   apiKey: "AIzaSyDZopgwT3FXAHhsTs2c78yk-dw92lnnEK8",
-      //   appId: "1:350617005648:web:64921c07aa521069b4ab55",
-      //   messagingSenderId: "3
-      // 50617005648",
-      //   projectId: "ToDo",
-      // ),
+    
       );
   runApp(MaterialApp(
     theme: ThemeData(primarySwatch: Palette.kToDark),

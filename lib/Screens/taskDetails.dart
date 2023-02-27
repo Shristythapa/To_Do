@@ -25,6 +25,7 @@ class _TaskDetailsState extends State<TaskDetails> {
   void initState() {
     _taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
     _authViewModel = Provider.of<AuthViewModel>(context, listen: false);
+   
 
     super.initState();
   }

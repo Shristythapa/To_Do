@@ -57,24 +57,24 @@ class _DashBoardState extends State<DashBoard> {
                 color: Color(0xffD8D1E3),
               ),
             ),
-            actions: [
-               GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                 MaterialPageRoute(builder: (context) => Setting()),
-                );
-              },
-              child: Padding(
-                padding: EdgeInsets.all(18),
-                child: Icon(
-                  Icons.notifications,
-                  color: Color(0xffD8D1E3),
-                ),
-              ),
-            ),
-            ],
+            // actions: [
+            //    GestureDetector(
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     Navigator.push(
+            //       context,
+            //      MaterialPageRoute(builder: (context) => Setting()),
+            //     );
+            //   },
+            //   child: Padding(
+            //     padding: EdgeInsets.all(18),
+            //     child: Icon(
+            //       Icons.notifications,
+            //       color: Color(0xffD8D1E3),
+            //     ),
+            //   ),
+            // ),
+            // ],
 
             //title
             title: Center(

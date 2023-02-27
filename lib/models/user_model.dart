@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 UserModel? userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
 String userModelToJson(UserModel? data) => json.encode(data!.toJson());
@@ -46,4 +48,15 @@ class UserModel {
         "imagepath": imagepath,
         "fcm": fcm,
     };
+       factory UserModel.fromFirebaseSnapshot(DocumentSnapshot<Map<String, dynamic>> json) => UserModel(
+   
+    id:json["id"],
+    username:json["username"], 
+    email: json["email"],
+    password: json["password"],
+    imagepath: json["imagepath"],
+    imageurl: json["imageurl"],
+    fcm: json["fcm"]
+ 
+  );
 }

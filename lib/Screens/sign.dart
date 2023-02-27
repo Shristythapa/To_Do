@@ -388,38 +388,8 @@ class _mySignUpState extends State<mySign> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                           width: 100,
-                          height: 25,
-                        ),
-                        SizedBox(
-                    
-                          width: 100,
-                          height: 50,
-                          child: ElevatedButton.icon(
-                            onHover: (value) {
-                              setState(() {
-                                !buttonPressed;
-                                ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFF6D3F83),
-                                    foregroundColor:
-                                        Color.fromARGB(255, 146, 114, 174));
-                              });
-                            },
-                            onPressed: (() {
-                             final provider = Provider.of<GoogleSignInProvider>(context,listen: false);
-                             provider.googleLogin();
-                             registerWithGoogle();
-                            }),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromARGB(255, 146, 114, 174),
-                              foregroundColor: Color.fromARGB(255, 230, 211, 239),
-                            ),
-                            icon: FaIcon(FontAwesomeIcons.google,
-                                color: Colors.grey),
-                            label: Text('Sign Up with Google'),
-                          ),
-                        ),
+                       
+                       
                         SizedBox(
                           height: 10,
                         ),
