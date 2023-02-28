@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do/Screens/tasks/taskDetails.dart';
 import 'package:to_do/services/google_sign_in_dart.dart';
 import 'package:to_do/utilities/palette.dart';
 import 'package:to_do/viewModel/auth_view_model.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
               "/register": (BuildContext context) => mySign(),
               "/dashboard": (BuildContext context) => DashBoard(),
               "/settings": (BuildContext context) => Setting(),
+           
             },
           );
         }),

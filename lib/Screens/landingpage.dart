@@ -26,7 +26,7 @@ class _MyLandingPageState extends State<MyLandingPage> {
   @override
   void initState() {
     _authViewModel = Provider.of<AuthViewModel>(context, listen: false);
-    checkLogin();
+    //checkLogin();
     super.initState();
   }
   @override

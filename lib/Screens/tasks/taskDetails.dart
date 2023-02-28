@@ -4,9 +4,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/Screens/tasks/task_list.dart';
 
-import '../models/task_model.dart';
-import '../viewModel/auth_view_model.dart';
-import '../viewModel/task_view_model.dart';
+import '../../models/task_model.dart';
+import '../../viewModel/auth_view_model.dart';
+import '../../viewModel/task_view_model.dart';
 
 class TaskDetails extends StatefulWidget {
   bool isChecked;
